@@ -19,7 +19,7 @@ import util.StringUtil;
 /*
  * 
  */
-public class Solr_index_qdtra {
+public class SolrUpdater {
 
 	public static ApplicationContext appCtx;
 	public static void main(String[] args) throws IOException, SolrServerException {
@@ -27,11 +27,20 @@ public class Solr_index_qdtra {
 		
 //		Systemconfig.setimentServer.deleteByQuery("media:4");
 //		Systemconfig.setimentServer.commit();
-		
+
+		for(int i=0;i<args.length;i++){
+			if("-c".equalsIgnoreCase(args[i])||"--clearall".equalsIgnoreCase(args[i])){
+				clearAll();
+			}
+
+			if("-u".equalsIgnoreCase(args[i])||"--update".equalsIgnoreCase(args[i])){
+				processAll();
+			}
+		}
 //		clearAll();
 //		clearEB();
 //		clearEBComment();
-		processAll();
+//		processAll();
 //		processByType(DataType.BBS);
 //		clearByQuery("media:4", 1);
 	}
