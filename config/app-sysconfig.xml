@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    <bean id="systemconfig" class="system.Systemconfig" init-method="init">
+
+        <!-- <property name="hbaseDBService" ref="hbaseService" /> -->
+        <property name="commonService" ref="service"/>
+        <property name="cycle" value="${cycle}"/>
+        <property name="URL" value="${url}"/>
+        <!-- <property name="index" value="${index}" />-->
+        <property name="connectTime" value="${connectTime}"/>
+        <property name="clientTime" value="${clientTime}"/>
+        <property name="coreName" value="${coreName}"/>
+    </bean>
+
+    <bean id="service" class="service.oracle.IntegrateOracleDBService">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+</beans>
