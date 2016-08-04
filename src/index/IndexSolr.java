@@ -20,7 +20,7 @@ import bean.EBData;
 import bean.Indexable;
 
 /**
- * solrË÷Òý
+ * solrï¿½ï¿½ï¿½ï¿½
  * 
  * @author grs
  *
@@ -47,9 +47,9 @@ public class IndexSolr {
 			// if(type.equals(DataType.EB_COMMENT)) {
 			// max = Systemconfig.commonService.getEbCommentDatas(list, type,
 			// max, SIZE);
-			// System.out.println(type.name()+"»ñÈ¡"+list.size()+"ÌõÊý¾Ý");
+			// System.out.println(type.name()+"ï¿½ï¿½È¡"+list.size()+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			// if(list.size()>0) {
-			// System.out.println(type.name()+"¿ªÊ¼Ìí¼ÓË÷Òý¡­¡­");
+			// System.out.println(type.name()+"ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			// try {
 			// Systemconfig.commentEbServer.addBeans(list);
 			// } catch (SolrServerException e) {
@@ -61,7 +61,7 @@ public class IndexSolr {
 			// max = Systemconfig.commonService.getEbCommentDatas(list, type,
 			// max, SIZE);
 			// }
-			// System.out.println(type.name()+"¿ªÊ¼Ìá½»Ë÷Òý¡­¡­");
+			// System.out.println(type.name()+"ï¿½ï¿½Ê¼ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			// try {
 			// Systemconfig.commentEbServer.commit();
 			// } catch (SolrServerException e) {
@@ -72,13 +72,13 @@ public class IndexSolr {
 			// } else if(type.equals(DataType.EB)) {
 			// max = Systemconfig.commonService.getEbDatas(list, type, max,
 			// SIZE);
-			// System.out.println(type.name()+"»ñÈ¡"+list.size()+"ÌõÊý¾Ý");
+			// System.out.println(type.name()+"ï¿½ï¿½È¡"+list.size()+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			// if(list.size()>0) {
-			// System.out.println(type.name()+"¿ªÊ¼Ìí¼ÓË÷Òý¡­¡­");
+			// System.out.println(type.name()+"ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			// try {
 			// Systemconfig.ebServer.addBeans(list);
 			//
-			// // ×ª»»
+			// // ×ªï¿½ï¿½
 			// List<CombineData> newList = covert(list);
 			// Systemconfig.setimentServer.addBeans(newList);
 			// newList.clear();
@@ -91,7 +91,7 @@ public class IndexSolr {
 			// max = Systemconfig.commonService.getEbDatas(list, type, max,
 			// SIZE);
 			// }
-			// System.out.println(type.name()+"¿ªÊ¼Ìá½»Ë÷Òý¡­¡­");
+			// System.out.println(type.name()+"ï¿½ï¿½Ê¼ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			// try {
 			// Systemconfig.ebServer.commit();
 			// Systemconfig.setimentServer.commit();
@@ -105,9 +105,9 @@ public class IndexSolr {
 			// System.out.println("debug...");
 			max = Systemconfig.commonService.getDatas(list, type, max, SIZE);
 
-			System.out.println(type.name() + "»ñÈ¡" + list.size() + "ÌõÊý¾Ý");
+			System.out.println(type.name() + "read: " + list.size() + " records.");
 			if (list.size() > 0) {
-				System.out.println(type.name() + "¿ªÊ¼Ìí¼ÓË÷Òý¡­¡­");
+				System.out.println(type.name() + " adding ...");
 				try {
 					Systemconfig.setimentServer.addBeans(list);
 				} catch (SolrServerException e) {
@@ -116,9 +116,9 @@ public class IndexSolr {
 					e.printStackTrace();
 				}
 				list.clear();
-				max = Systemconfig.commonService.getDatas(list, type, max, SIZE);
+//				max = Systemconfig.commonService.getDatas(list, type, max, SIZE);
 			}
-			System.out.println(type.name() + "¿ªÊ¼Ìá½»Ë÷Òý¡­¡­");
+			System.out.println(type.name() + " committing...");
 			try {
 				UpdateResponse res = Systemconfig.setimentServer.commit();
 				System.out.println(res);
@@ -130,7 +130,7 @@ public class IndexSolr {
 			// }
 			if (num < max)
 				Systemconfig.commonService.update(max, type);
-			System.out.println(type.name() + "Ìá½»Ë÷ÒýÍê³É£¡ÓÃÊ±£º" + (System.currentTimeMillis() - start));
+			System.out.println(type.name() + "cost: " + (System.currentTimeMillis() - start) + " milliseconds.");
 			list.clear();
 		}
 
@@ -161,7 +161,7 @@ public class IndexSolr {
 	}
 
 	/**
-	 * Ë÷ÒýÊý¾Ý
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	public void indexData() {
 		for (DataType dt : DataType.values()) {
@@ -178,7 +178,7 @@ public class IndexSolr {
 	}
 
 	/**
-	 * Ë÷ÒýÊý¾Ý
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 */
 	public void indexData(DataType type) {

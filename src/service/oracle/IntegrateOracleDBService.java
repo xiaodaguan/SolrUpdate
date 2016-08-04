@@ -316,7 +316,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 				}));
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+ 			}
 		}
 		return max.get(0);
 	}
