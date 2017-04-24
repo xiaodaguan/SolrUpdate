@@ -66,8 +66,17 @@ public class CombineData implements Indexable {
 	
 	@Field
 	private int isJunk;//ÊÇ·ñÀ¬»ø
-	
-	
+
+	@Field
+	private int relateLevel;
+
+	public int getRelateLevel() {
+		return relateLevel;
+	}
+
+	public void setRelateLevel(int relateLevel) {
+		this.relateLevel = relateLevel;
+	}
 	
 	
 	public int getIsJunk() {

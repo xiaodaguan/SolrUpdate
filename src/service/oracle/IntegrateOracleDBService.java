@@ -18,7 +18,7 @@ import service.AbstractDBService;
 import util.StringUtil;
 //.*(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).*
 public class IntegrateOracleDBService extends AbstractDBService {
-	
+
 	//list, type, max, SIZE
 	public int getEbCommentDatas(final List<Indexable> list, final DataType type, int start, int len) {
 		String sql = "select id, info, label, lv, person, product_code, product_title, "
@@ -31,7 +31,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 		//从id>start开始的len条数据
 		final List<Integer> max = new ArrayList<Integer>();
 		max.add(0, start);
-		
+
 		list.addAll(this.jdbcTemplate.query(sql, new RowMapper<CommentData>(){
 			@Override
 			public CommentData mapRow(ResultSet rs, int arg1)
@@ -43,7 +43,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 				String label = rs.getString(3);
 				if(label != null) {
 					String[] arr = label.split(",");
-					for(String a : arr) 
+					for(String a : arr)
 						labelList.add(a);
 					data.setLabel(labelList);
 				}
@@ -55,7 +55,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 				data.setScore(rs.getString(9));
 				data.setCid(rs.getObject(10).toString());
 				data.setMd5(rs.getString(11));
-				
+
 				if(max.get(0) < data.getDid()) {
 					max.set(0, data.getDid());
 				}
@@ -79,7 +79,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 		final List<Integer> max = new ArrayList<Integer>();
 		max.add(0, start);
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		list.addAll(this.jdbcTemplate.query(sql, new RowMapper<EBData>(){
 			@Override
 			public EBData mapRow(ResultSet rs, int arg1)
@@ -92,7 +92,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 				if(img != null) {
 					List<String> l = new ArrayList<String>();
 					String[] a = img.split(",");
-					for(String s : a) 
+					for(String s : a)
 						l.add(s);
 					data.setImgUrl(l);
 				}
@@ -100,7 +100,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 				if(img != null ){
 					List<String> l = new ArrayList<String>();
 					String[] a = img.split(",");
-					for(String s : a) 
+					for(String s : a)
 						l.add(s);
 					data.setInfoImgUrl(l);
 				}
@@ -112,8 +112,8 @@ public class IntegrateOracleDBService extends AbstractDBService {
 					if(d.equals("")) d = "0";
 					data.setDiameter(Double.parseDouble(d));
 				}
-					
-				
+
+
 				String width = rs.getString(7);
 				if(width == null)
 					data.setWidth(0);
@@ -124,7 +124,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 					if(width.equals("")) width = "0";
 					data.setWidth(Double.parseDouble(width));
 				}
-				
+
 				String price = rs.getString(8);
 				String[] ps = price.split(",");
 				List<Double> priceList = new ArrayList<Double>();
@@ -132,7 +132,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 					priceList.add(Double.parseDouble(s.trim()));
 				}
 				data.setPriceSingle(priceList.get(priceList.size()-1));
-				
+
 				String sale = rs.getString(9);
 				String[] ss = sale.split(",");
 				List<Integer> saleList = new ArrayList<Integer>();
@@ -140,7 +140,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 					saleList.add(Integer.parseInt(s.trim()));
 				}
 				data.setSaleNumSingle(saleList.get(saleList.size()-1));
-				
+
 				data.setBrand(rs.getString(10));
 				data.setUrl(rs.getString(11));
 				data.setContent(data.getContent()==null?"":data.getContent()+"\n"+rs.getString(12));
@@ -163,7 +163,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 				}
 				data.setYear(rs.getInt(21));
 				data.setMonth(rs.getInt(22));
-				
+
 				if(max.get(0) < data.getDid()) {
 					max.set(0, data.getDid());
 				}
@@ -176,44 +176,44 @@ public class IntegrateOracleDBService extends AbstractDBService {
 	public int getDatas(final List<Indexable> list, final DataType type, int start, int len) {
 		String sql = COMMON;
 		switch(type) {
-		case NEWS : {
-			sql += "title, author, img_url, same_num from ("+COMMON_PREFIX+
-					"A.title, A.author, A.img_url, A.same_num, rownum rn from ("+COMMON+"title, author, img_url, same_num from "
-					+type.name().toLowerCase()+"_data_processed where id > "+start+" order by id) A where rownum <="+len+") where rn >0";
-			break;
-		}
-		case BBS :
-		case BLOG : {
-			sql += "title, author, img_url from ("+COMMON_PREFIX+
-					"A.title, A.author, A.img_url, rownum rn from ("+COMMON+"title, author, img_url from "
-					+type.name().toLowerCase()+"_data_processed where id > "+start+" order by id) A where rownum <="+len+") where rn >0";
+			case NEWS : {
+				sql += "title, author, img_url, same_num from ("+COMMON_PREFIX+
+						"A.title, A.author, A.img_url, A.same_num, rownum rn from ("+COMMON+"title, author, img_url, same_num from "
+						+type.name().toLowerCase()+"_data_processed where id > "+start+" order by id) A where rownum <="+len+") where rn >0";
+				break;
+			}
+			case BBS :
+			case BLOG : {
+				sql += "title, author, img_url from ("+COMMON_PREFIX+
+						"A.title, A.author, A.img_url, rownum rn from ("+COMMON+"title, author, img_url from "
+						+type.name().toLowerCase()+"_data_processed where id > "+start+" order by id) A where rownum <="+len+") where rn >0";
 //			System.out.println("weixin sql :"+sql);
-			break;
-		}
-		case WEIXIN :{
+				break;
+			}
+			case WEIXIN :{
 
-			sql += "title, author, img_url, read_num, like_num from ("+COMMON_PREFIX+
-					"A.title, A.author, A.img_url,A.read_num, A.like_num, rownum rn from ("+COMMON+"title, author, img_url, read_num, like_num from "
-					+type.name().toLowerCase()+"_data_processed where id > "+start+" order by id) A where rownum <="+len+") where rn >0";
+				sql += "title, author, img_url, read_num, like_num from ("+COMMON_PREFIX+
+						"A.title, A.author, A.img_url,A.read_num, A.like_num, rownum rn from ("+COMMON+"title, author, img_url, read_num, like_num from "
+						+type.name().toLowerCase()+"_data_processed where id > "+start+" order by id) A where rownum <="+len+") where rn >0";
 //			System.out.println("weixin sql :"+sql);
-			break;
-		
-		}
-		case WEIBO : {
-			sql += "author, img_url, comment_num, rtt_num from ( "+COMMON_PREFIX+
-					"A.author, A.img_url, A.comment_num, A.rtt_num, rownum rn from ("+COMMON+
-					"author, img_url, comment_num, rtt_num from "+type.name().toLowerCase()+
-					"_data_processed where id > "+start+" order by id) A where rownum <="+len+") where rn >0";
-			break; 
-		}
-		
-		case REPORT : {
-			sql = "select id, title, pubtime, search_key, url, md5, insert_time, category_id from ("
-					+ "select A.id, A.title, A.pubtime, A.search_key,A.url, A.md5, A.insert_time, A.category_id, rownum rn from ("
-					+ "select id, title, pubtime, search_key, url, md5, insert_time, category_id from company_report where id > "+start+" order by id) A where rownum <="+len+")  where rn > 0";
-			break;
-		}
-		default : return 0;
+				break;
+
+			}
+			case WEIBO : {
+				sql += "author, img_url, comment_num, rtt_num from ( "+COMMON_PREFIX+
+						"A.author, A.img_url, A.comment_num, A.rtt_num, rownum rn from ("+COMMON+
+						"author, img_url, comment_num, rtt_num from "+type.name().toLowerCase()+
+						"_data_processed where id > "+start+" order by id) A where rownum <="+len+") where rn >0";
+				break;
+			}
+
+			case REPORT : {
+				sql = "select id, title, pubtime, search_key, url, md5, insert_time, category_id from ("
+						+ "select A.id, A.title, A.pubtime, A.search_key,A.url, A.md5, A.insert_time, A.category_id, rownum rn from ("
+						+ "select id, title, pubtime, search_key, url, md5, insert_time, category_id from company_report where id > "+start+" order by id) A where rownum <="+len+")  where rn > 0";
+				break;
+			}
+			default : return 0;
 		}
 		final List<Integer> max = new ArrayList<Integer>();
 		max.add(0, start);
@@ -239,7 +239,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 						index.setInsertTime(rs.getDate(7));
 						index.setCategoryCode(rs.getInt(8));
 						index.setMedia(type.ordinal());
-						
+
 						code(rs.getInt(8), index);
 						if(max.get(0) < index.getId()) {
 							max.set(0, index.getId());
@@ -248,7 +248,7 @@ public class IntegrateOracleDBService extends AbstractDBService {
 					}
 				}));
 			} catch (Exception e) {
-				e.printStackTrace();	
+				e.printStackTrace();
 			}
 		} else {
 			try {
@@ -280,34 +280,35 @@ public class IntegrateOracleDBService extends AbstractDBService {
 						index.setSearchKeyword(rs.getString(17));
 						index.setRoadType(rs.getInt(18));
 						index.setIsJunk(rs.getInt(19));
+						index.setRelateLevel(rs.getInt(20));
 						switch(type) {
-						case NEWS : {
-							index.setTitle(rs.getString(20));
-							index.setAuthor(rs.getString(21));
-							index.setImgUrl(rs.getString(22));
-							index.setSimilarCount(rs.getInt(23));
-							break;
-						} 
-						case WEIBO : {
-							index.setAuthor(rs.getString(20));
-							index.setImgUrl(rs.getString(21));
-							index.setCommCount(rs.getInt(22));
-							index.setRttCount(rs.getInt(23));
-							break;
-						}
-						case BBS : 
-						case BLOG : 
-						case WEIXIN :{
-							index.setTitle(rs.getString(20));
-							index.setAuthor(rs.getString(21));
-							index.setImgUrl(rs.getString(22));
-							break;
-						}
-						default:
-							break;
+							case NEWS : {
+								index.setTitle(rs.getString(21));
+								index.setAuthor(rs.getString(22));
+								index.setImgUrl(rs.getString(23));
+								index.setSimilarCount(rs.getInt(24));
+								break;
+							}
+							case WEIBO : {
+								index.setAuthor(rs.getString(21));
+								index.setImgUrl(rs.getString(22));
+								index.setCommCount(rs.getInt(23));
+								index.setRttCount(rs.getInt(24));
+								break;
+							}
+							case BBS :
+							case BLOG :
+							case WEIXIN :{
+								index.setTitle(rs.getString(21));
+								index.setAuthor(rs.getString(22));
+								index.setImgUrl(rs.getString(23));
+								break;
+							}
+							default:
+								break;
 						}
 						index.setMedia(type.ordinal());
-						
+
 						if(max.get(0) < index.getId()) {
 							max.set(0, index.getId());
 						}
@@ -316,12 +317,12 @@ public class IntegrateOracleDBService extends AbstractDBService {
 				}));
 			} catch (Exception e) {
 				e.printStackTrace();
- 			}
+			}
 		}
 		return max.get(0);
 	}
-	
-	private static String COMMON = "select "	
+
+	private static String COMMON = "select "
 			+ "url, "
 			+ "content, "
 			+ "pubtime, "
@@ -334,15 +335,16 @@ public class IntegrateOracleDBService extends AbstractDBService {
 			+ "category3, "
 			+ "warn_level, "
 			+ "hot_index, "
-			+ "emotion_score, " 
+			+ "emotion_score, "
 			+ "reliability, "
 			+ "id, "
 			+ "keywords, "
 			+ "search_keyword,"
 			+ "road_type, "
-			+ "is_junk, ";
-	
-	private static String COMMON_PREFIX = "select "	
+			+ "is_junk, " +
+			"relate_level, ";
+
+	private static String COMMON_PREFIX = "select "
 			+ "A.url, "
 			+ "A.content, "
 			+ "A.pubtime, "
@@ -361,5 +363,6 @@ public class IntegrateOracleDBService extends AbstractDBService {
 			+ "A.keywords, "
 			+ "A.search_keyword, "
 			+ "A.road_type, "
-			+ "A.is_junk, ";
+			+ "A.is_junk, " +
+			"A.relate_level, ";
 }

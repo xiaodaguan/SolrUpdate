@@ -20,7 +20,7 @@ import bean.EBData;
 import bean.Indexable;
 
 /**
- * solr����
+ * solr????
  * 
  * @author grs
  *
@@ -47,9 +47,9 @@ public class IndexSolr {
 			// if(type.equals(DataType.EB_COMMENT)) {
 			// max = Systemconfig.commonService.getEbCommentDatas(list, type,
 			// max, SIZE);
-			// System.out.println(type.name()+"��ȡ"+list.size()+"������");
+			// System.out.println(type.name()+"???"+list.size()+"??????");
 			// if(list.size()>0) {
-			// System.out.println(type.name()+"��ʼ�����������");
+			// System.out.println(type.name()+"??????????????");
 			// try {
 			// Systemconfig.commentEbServer.addBeans(list);
 			// } catch (SolrServerException e) {
@@ -61,7 +61,7 @@ public class IndexSolr {
 			// max = Systemconfig.commonService.getEbCommentDatas(list, type,
 			// max, SIZE);
 			// }
-			// System.out.println(type.name()+"��ʼ�ύ��������");
+			// System.out.println(type.name()+"?????????????");
 			// try {
 			// Systemconfig.commentEbServer.commit();
 			// } catch (SolrServerException e) {
@@ -72,13 +72,13 @@ public class IndexSolr {
 			// } else if(type.equals(DataType.EB)) {
 			// max = Systemconfig.commonService.getEbDatas(list, type, max,
 			// SIZE);
-			// System.out.println(type.name()+"��ȡ"+list.size()+"������");
+			// System.out.println(type.name()+"???"+list.size()+"??????");
 			// if(list.size()>0) {
-			// System.out.println(type.name()+"��ʼ�����������");
+			// System.out.println(type.name()+"??????????????");
 			// try {
 			// Systemconfig.ebServer.addBeans(list);
 			//
-			// // ת��
+			// // ???
 			// List<CombineData> newList = covert(list);
 			// Systemconfig.setimentServer.addBeans(newList);
 			// newList.clear();
@@ -91,7 +91,7 @@ public class IndexSolr {
 			// max = Systemconfig.commonService.getEbDatas(list, type, max,
 			// SIZE);
 			// }
-			// System.out.println(type.name()+"��ʼ�ύ��������");
+			// System.out.println(type.name()+"?????????????");
 			// try {
 			// Systemconfig.ebServer.commit();
 			// Systemconfig.setimentServer.commit();
@@ -161,7 +161,7 @@ public class IndexSolr {
 	}
 
 	/**
-	 * ��������
+	 * ????????
 	 */
 	public void indexData() {
 		for (DataType dt : DataType.values()) {
@@ -178,7 +178,7 @@ public class IndexSolr {
 	}
 
 	/**
-	 * ��������
+	 * ????????
 	 * 
 	 */
 	public void indexData(DataType type) {

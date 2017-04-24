@@ -37,7 +37,7 @@ import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.jdbc.core.RowMapper;
 
-import db.Match;
+
 import bean.BrandDS;
 import bean.CombineData;
 import bean.CommentData;
