@@ -1,0 +1,49 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.aop-3.0.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/hbase-0.94.16-security.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-collections-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-expression-3.1.0.M2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lucene-core-4.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jcl-over-slf4j-1.6.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/httpmime-4.2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/noggit-0.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.transaction-3.0.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.beans-3.0.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.asm-3.0.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.context-3.0.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/aopalliance-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-lang-2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/hadoop-core-1.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-configuration-1.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.core-3.0.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.jdbc-3.0.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-dbcp-1.2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-io-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/quartz-1.6.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/solr-core-4.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ojdbc6_g.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/protobuf-java-2.4.0a.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-log4j12-1.6.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-pool.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/httpclient-4.2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/wstx-asl-3.2.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/geronimo-stax-api_1.0_spec-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/solr-solrj-4.6.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/httpcore-4.2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jul-to-slf4j-1.6.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.context.support-3.0.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.6.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.19-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/solr-analysis-extras-4.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-jdk14-1.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/zookeeper-3.4.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

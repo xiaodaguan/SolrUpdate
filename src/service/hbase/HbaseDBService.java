@@ -37,7 +37,6 @@ import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.jdbc.core.RowMapper;
 
-import db.Match;
 import bean.BrandDS;
 import bean.CombineData;
 import bean.CommentData;
@@ -55,12 +54,12 @@ public class HbaseDBService extends AbstractDBService {
 	static HConnection connection = null;
 	private static Map<Integer, String> map = new HashMap<Integer, String>();
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	private SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-	//字集合
+	private SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy??MM??dd?? HH:mm");
+	//?????
 	private static Set<String> words = new HashSet<String>();
-	//起始字符
+	//??????
 	private static Set<String> first = new HashSet<String>();
-	//终止字符
+	//??????
 	private static Set<String> end = new HashSet<String>();
 	private static final Map<String, List<BrandDS>> brands = new TreeMap<String, List<BrandDS>>();
 	static {
@@ -85,7 +84,7 @@ public class HbaseDBService extends AbstractDBService {
 	
 	private static String sql = "select name, alias from eb_brand where type=0";
 	/**
-	 * 得到品牌名及其别名列表
+	 * ????????????????斜?
 	 */
 	public void brands() {
 		jdbcTemplate.query(sql , new RowMapper<Object>(){
@@ -130,7 +129,7 @@ public class HbaseDBService extends AbstractDBService {
 		});
 	}
 	/**
-	 * 通过文件处理品牌名
+	 * ???????????????
 	 */
 	private static void fileBrands() {
 		List<String> con = StringUtil.contentList("brand", "utf-8");
@@ -157,7 +156,7 @@ public class HbaseDBService extends AbstractDBService {
 	@Override
 	public int getDatas(List<Indexable> list, DataType type, int start, int len) {
 		Scan scan = new Scan("0".getBytes(), "1".getBytes());
-		//对于全局搜索汇总的电商，需要过滤
+		//???????????????????????????
 		Filter filter = new SingleColumnValueFilter(Bytes.toBytes("indexFlag"), Bytes.toBytes("global"),  
                 CompareOp.EQUAL, Bytes.toBytes("false"));
 		scan.setFilter(filter);
@@ -195,7 +194,7 @@ public class HbaseDBService extends AbstractDBService {
 		}
 	}
 	/**
-	 * 获取全局搜索电商数据
+	 * ??????????????????
 	 * @param rs
 	 * @param list
 	 */
@@ -245,15 +244,15 @@ public class HbaseDBService extends AbstractDBService {
 //			if(b != null) {
 //				String s = new String(b, "utf-8").trim();
 //				if(!s.equals(""))
-//					e.setPubdate(sdf.parse(s.replace("上架时间：", "")));
+//					e.setPubdate(sdf.parse(s.replace("??????", "")));
 //			}
 //			
 			b = r.getValue(Bytes.toBytes("url"), Bytes.toBytes("url"));
 			e.setUrl(new String(b));
 			if(e.getUrl().contains("taobao.com"))
-				e.setSource("淘宝");
+				e.setSource("???");
 			else if(e.getUrl().contains("jd.com"))
-				e.setSource("京东");
+				e.setSource("????");
 			e.setMedia(7);
 			
 			if(map.containsKey(e.getCategoryCode())) {
@@ -270,7 +269,7 @@ public class HbaseDBService extends AbstractDBService {
 			e1.printStackTrace();
 		}
 	}
-	private static final String[] FILTER = {"米其林", "马牌", "固特异", "邓禄普", "普利司通","赛轮", "三角", "回力", "双钱", "金宇", "玲珑", "中策", "其他/Other"};
+	private static final String[] FILTER = {"??????", "????", "??????", "?????", "??????","????", "????", "????", "??", "????", "????", "?胁?", "????/Other"};
 	public static Set<String> set = new HashSet<String>();
 	private boolean ebAttrSet(Result r, List<Indexable> list) {
 		EBData e = new EBData();
@@ -280,7 +279,7 @@ public class HbaseDBService extends AbstractDBService {
 			if(b != null)
 				e.setTitle(new String(b, "utf-8"));
 			
-			if(!e.getTitle().contains("轮胎")) return false;
+			if(!e.getTitle().contains("???")) return false;
 			
 			b = r.getValue(Bytes.toBytes("content"), Bytes.toBytes("content"));
 			if(b != null)
@@ -299,22 +298,22 @@ public class HbaseDBService extends AbstractDBService {
 			if(b != null)
 				e.setBrand(new String(b, "utf-8"));
 			else
-				e.setBrand("其他");
-			//处理品牌名,首先去除所有空格和数字,没有brand的从标题抽取
+				e.setBrand("????");
+			//?????????,??????????锌???????,???brand????????
 			e.setBrand(e.getBrand().replace(" ", "").replaceAll("\\d", "").toUpperCase());
 			if(e.getBrand().trim().equals("")) {
-				int index = e.getTitle().indexOf("轮胎");
+				int index = e.getTitle().indexOf("???");
 				if(index > -1) {
-					String s = "其他";
+					String s = "????";
 					if(index > 4) {
-						//向前平移4个字符，可覆盖中文情况，后面可判断字符中英文决定移动多少字符
+						//??????4???????????????????????????卸??????????????????????
 						s = e.getTitle().substring(index-4, index);
 					}
 					e.setBrand(s);
 				} else {
-					String s = StringUtil.regMatcher(e.getTitle(), "（", "）"); 
+					String s = StringUtil.regMatcher(e.getTitle(), "??", "??"); 
 					if(s == null) {
-						s = "其他";
+						s = "????";
 					}
 					e.setBrand(s);
 				}
@@ -333,7 +332,7 @@ public class HbaseDBService extends AbstractDBService {
 					continue;
 				}
 				len++;
-//				//需特殊处理的字符匹配
+//				//???????????????
 				if(end.contains(tmp)) {
 					String in = s.substring(index-len, index);
 					List<BrandDS> li = brands.get(in);
@@ -358,7 +357,7 @@ public class HbaseDBService extends AbstractDBService {
 				if(!first.contains(tmp)) 
 					len = 0;
 			}
-			if(e.getBrand() == null || e.getBrand().contains("其他")) e.setBrand("其他");
+			if(e.getBrand() == null || e.getBrand().contains("????")) e.setBrand("????");
 //			boolean flag = false;
 //			for(String ss : FILTER) {
 //				if(e.getBrand().contains(ss)) {
@@ -447,13 +446,13 @@ public class HbaseDBService extends AbstractDBService {
 //			b = r.getValue(Bytes.toBytes("params"), Bytes.toBytes("model"));
 //			if(b != null) {
 //				e.setModel(new String(b,"utf-8"));
-//				e.getModel().replace("颜色分类", "").replace("规格", "").replace("轮胎", "");
+//				e.getModel().replace("???????", "").replace("???", "").replace("???", "");
 //			}
 			
 			
 			b = r.getValue(Bytes.toBytes("params"), Bytes.toBytes("params"));
 			if(b != null) {
-				String model = StringUtil.regMatcher(new String(b,"utf-8"), "型号:", "[轮颜规]");
+				String model = StringUtil.regMatcher(new String(b,"utf-8"), "???:", "[?????]");
 				if(model == null)
 					e.setModel(new String(b,"utf-8"));
 				else
@@ -468,7 +467,7 @@ public class HbaseDBService extends AbstractDBService {
 //			if(b != null) {
 //				String s = new String(b, "utf-8").trim();
 //				if(!s.equals(""))
-//					e.setPubdate(sdf.parse(s.replace("上架时间：", "")));
+//					e.setPubdate(sdf.parse(s.replace("??????", "")));
 //			}
 			
 			b = r.getValue(Bytes.toBytes("owner"), Bytes.toBytes("owner_name"));
@@ -478,9 +477,9 @@ public class HbaseDBService extends AbstractDBService {
 			b = r.getValue(Bytes.toBytes("url"), Bytes.toBytes("url"));
 			e.setUrl(new String(b));
 			if(e.getUrl().contains("taobao.com"))
-				e.setSite("淘宝");
+				e.setSite("???");
 			else if(e.getUrl().contains("jd.com"))
-				e.setSite("京东");
+				e.setSite("????");
 			list.add(e);
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -519,7 +518,7 @@ public class HbaseDBService extends AbstractDBService {
 	
 	public void getComments(List<Indexable> list,  int len) throws IOException {
 		Scan scan = new Scan("1_".getBytes());
-		//对于全局搜索汇总的电商，需要过滤
+		//???????????????????????????
 		Filter filter = new SingleColumnValueFilter(Bytes.toBytes("indexFlag"), Bytes.toBytes("globle"),  
                 CompareOp.EQUAL, Bytes.toBytes("false"));
 		scan.setFilter(filter);
@@ -631,7 +630,7 @@ public class HbaseDBService extends AbstractDBService {
 //StringBuffer sb = new StringBuffer();
 //for(int i = 0;i < e.getBrand().length();i++) {
 //	char c = e.getBrand().charAt(i);
-//	//添加字符到字符串直到不存在相关字符
+//	//????????????????????????????
 //	if(words.contains(String.valueOf(c))) {
 //		sb.append(c);
 //	} else {
@@ -640,12 +639,12 @@ public class HbaseDBService extends AbstractDBService {
 //			sb.delete(0, sb.toString().length());
 //			continue;
 //		}
-//		//找到后设置品牌
+//		//????????????
 //		for(BrandDS bds : li) {
 //			if(bds.master) {
 //				e.setBrand(bds.name);
 //				find = true;
-//				all.append("字符匹配到的品牌：").append(e.getBrand()).append(",").append(sb.toString()).append("\n");
+//				all.append("????????????").append(e.getBrand()).append(",").append(sb.toString()).append("\n");
 //				break;
 //			}
 //		}
@@ -657,12 +656,12 @@ public class HbaseDBService extends AbstractDBService {
 //		for(BrandDS bds : bl) {
 //			if(bds.master) {
 //				e.setBrand(bds.name);
-//				all.append("字符匹配到的品牌：").append(e.getBrand()).append(",").append(sb.toString()).append("\n");
+//				all.append("????????????").append(e.getBrand()).append(",").append(sb.toString()).append("\n");
 //				break;
 //			}
 //		}
 //	} else {
-//		e.setBrand("其他");
-//		all.append("没找到的品牌：").append(sb.toString()).append("\n");
+//		e.setBrand("????");
+//		all.append("??????????").append(sb.toString()).append("\n");
 //	}
 //}
